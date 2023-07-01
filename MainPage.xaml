@@ -37,6 +37,7 @@
                 SemanticProperties.Hint="Starts the game"
                 FontAttributes="Bold"
                 FontSize="25"
+                CornerRadius="20"
                 Clicked="btn_play_Clicked"
                 HorizontalOptions="Center"/>
             
@@ -45,6 +46,7 @@
                 SemanticProperties.Hint= "Allows player to log in"
                 FontAttributes="Bold"
                 FontSize="25"
+                CornerRadius="20"
                 Margin="-10"
                 Clicked="login_Clicked"
                 HorizontalOptions="Center" />
@@ -54,6 +56,7 @@
                 SemanticProperties.Hint= "Explains how to play the game"
                 FontAttributes="Bold"
                 FontSize="20"
+                CornerRadius="20"
                 Clicked="how_Clicked"
                 HorizontalOptions="Center" />
 
