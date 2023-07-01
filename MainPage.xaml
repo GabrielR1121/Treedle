@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Treedle.MainPage"
+             NavigationPage.HasNavigationBar ="False">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+            <!-- www.flaticon.com/free-icons/tree, Tree icons, created by ultimatearm - Flaticon -->
+            <Image
+                Source="tree_icon.png"
+                SemanticProperties.Description="Cute tree"
+                HeightRequest="250"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Treedle"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="50"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Get 6 chances to guess a 5-letter word."
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Get 6 chances to guess a 5-letter word."
+                FontSize="30"
+                Padding="-1"
+                HorizontalOptions="Center" />
+            
+            
+            <Button
+                Text="Play"
+                SemanticProperties.Hint="Starts the game"
+                FontAttributes="Bold"
+                FontSize="25"
+                Clicked="btn_play_Clicked"
+                HorizontalOptions="Center"/>
+            
+            <Button
+                Text="Log in"
+                SemanticProperties.Hint= "Allows player to log in"
+                FontAttributes="Bold"
+                FontSize="25"
+                Margin="-10"
+                Clicked="login_Clicked"
+                HorizontalOptions="Center" />
+
+            <Button
+                Text="How to play"
+                SemanticProperties.Hint= "Explains how to play the game"
+                FontAttributes="Bold"
+                FontSize="20"
+                Clicked="how_Clicked"
+                HorizontalOptions="Center" />
+
+
+            <Label
+                Text="This is a recreation of the game Wordle meant to practice programming techniques."
+                SemanticProperties.HeadingLevel="Level3"
+                SemanticProperties.Description="Get 6 chances to guess a 5-letter word."
+                FontSize="15"
+                Padding="-1"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="recreated by Gabriel Rodriguez"
+                SemanticProperties.HeadingLevel="Level4"
+                SemanticProperties.Description="Get 6 chances to guess a 5-letter word."
+                FontSize="15"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
