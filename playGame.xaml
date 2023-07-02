@@ -15,9 +15,171 @@
     </NavigationPage.TitleView>
 
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        
+
+        <Grid 
+            Background="lightGray"  
+            RowDefinitions="Auto"  
+            ColumnDefinitions="Auto, Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+            ColumnSpacing="10"
+            RowSpacing="10"
+            Margin="3"
+            Padding="35, 0, 35, 0"
+            HorizontalOptions="Center">
+
+
+            <Button Grid.Row="0" Grid.Column="1"
+                Text="W"
+                BackgroundColor="Gray"
+                />
+
+            <Button 
+                Text="Q"
+                BackgroundColor="Gray"
+                />
+
+            <Button Grid.Row="0" Grid.Column="1"
+                Text="W"
+                BackgroundColor="Gray"
+                />
+            
+            <Button Grid.Row="0" Grid.Column="2"
+                Text="E"
+                BackgroundColor="Gray"
+                />
+
+            <Button Grid.Row="0" Grid.Column="3"
+                Text="R"
+                BackgroundColor="Gray"
+                />
+            
+            <Button Grid.Row="0" Grid.Column="4"
+                Text="T"
+                BackgroundColor="Gray"
+                />
+
+            <Button Grid.Row="0" Grid.Column="5"
+                Text="Y"
+                BackgroundColor="Gray"
+                />
+            
+            <Button Grid.Row="0" Grid.Column="6"
+                Text="U"
+                BackgroundColor="Gray"
+                />
+            
+            <Button Grid.Row="0" Grid.Column="7"
+                Text="I"
+                BackgroundColor="Gray"
+                />
+            
+            <Button Grid.Row="0" Grid.Column="8"
+                Text="O"
+                BackgroundColor="Gray"
+                />
+
+            <Button Grid.Row="0" Grid.Column="9"
+                Text="P"
+                BackgroundColor="Gray"
+                />
+        </Grid>
+
+        <Grid 
+            Background="lightGray"  
+            RowDefinitions="Auto"  
+            ColumnDefinitions="Auto, Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+            ColumnSpacing="10"
+            RowSpacing="10"
+            Margin="2"
+            Padding="35,0, 35, 0"
+            HorizontalOptions="Center">
+
+            <Button Grid.Row="0" Grid.Column="0"
+                Text="A"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="1"
+                Text="S"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="2"
+                Text="D"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="3"
+                Text="F"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="4"
+                Text="G"
+                BackgroundColor="Gray"/>
+            
+            <Button Grid.Row="0" Grid.Column="5"
+                Text="H"
+                BackgroundColor="Gray"/>
+            
+            <Button Grid.Row="0" Grid.Column="6"
+                Text="J"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="7"
+                Text="K"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="8"
+                Text="L"
+                BackgroundColor="Gray"/>
+
+
+        </Grid>
+
+
+        <Grid 
+            Background="lightGray"  
+            RowDefinitions="Auto"  
+            ColumnDefinitions="Auto, Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+            ColumnSpacing="10"
+            RowSpacing="10"
+            Margin="2"
+            Padding="35,0, 35, 0"
+            HorizontalOptions="Center">
+
+            <Button
+                Text="Enter"
+                />
+
+            <Button Grid.Row="0" Grid.Column="1"
+                Text="Z"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="2"
+                Text="X"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="3"
+                Text="C"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="4"
+                Text="V"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="5"
+                Text="B"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="6"
+                Text="N"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="7"
+                Text="M"
+                BackgroundColor="Gray"/>
+
+            <Button Grid.Row="0" Grid.Column="8"
+             Text="Delete"/>
+        </Grid>
+
+
     </VerticalStackLayout>
 </ContentPage>
