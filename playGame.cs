@@ -13,7 +13,8 @@ public partial class playGame : ContentPage
         createTitle();
 
         //Creates the verticle layout that holds the items in the page
-        VerticalStackLayout verticalStackLayout = new VerticalStackLayout { };
+        VerticalStackLayout verticalStackLayout = new VerticalStackLayout { 
+        BackgroundColor=Colors.Black};
 
 
 
@@ -56,8 +57,7 @@ public partial class playGame : ContentPage
         //Creates the grid with the appropriate cosmetics and settings
         Grid grid = new Grid
         {
-            BackgroundColor = Colors.White,
-            Margin = new Thickness(0, 20, 0, 200),
+            Margin = new Thickness(0, 40, 0, 90),
             ColumnSpacing = 10,
             RowSpacing = 10,
             HorizontalOptions = LayoutOptions.Center,
@@ -85,7 +85,9 @@ public partial class playGame : ContentPage
         //Creates each grid by making using the createBorder and createLabel Message.
         for (int row = 0; row < 5; row++)
             for (int col = 0; col < 6; col++)
-                grid.Add(createBorder(createLabel()), row, col);
+            {
+               grid.Add(createBorder(createLabel()), row, col);
+            }
 
         return grid;
 
@@ -101,7 +103,7 @@ public partial class playGame : ContentPage
         return new Label
         {
             Text = "X",
-            TextColor = Colors.White,
+            TextColor = Colors.Black,
             FontSize = 39,
             FontAttributes = FontAttributes.Bold,
             HorizontalTextAlignment = TextAlignment.Center
@@ -119,8 +121,10 @@ public partial class playGame : ContentPage
         return new Border
         {
             Content = label,
-            StrokeThickness = 3,
-            Padding = new Thickness(20, 5),
+            BackgroundColor = Colors.Black,
+            Stroke = Color.FromArgb("#787c7f"),
+            StrokeThickness = 2,
+            Padding = new Thickness(30, 15),
             HorizontalOptions = LayoutOptions.Center,
 
         };
@@ -135,7 +139,6 @@ public partial class playGame : ContentPage
         //Keyboard design 
         Grid grid = new Grid
         {
-            BackgroundColor = Colors.DarkGray,
             ColumnSpacing = 10,
             RowSpacing = 10,
             Margin = new Thickness(3),
@@ -187,13 +190,21 @@ public partial class playGame : ContentPage
             {
                 Text = letter,
                 WidthRequest = 70,
-                BackgroundColor = Colors.Gray
+                FontSize = 13,
+                FontAttributes = FontAttributes.Bold,
+                TextColor = Colors.White,
+                BackgroundColor = Color.FromArgb("#787c7f")
             };
         else
             return new Button
             {
                 Text = letter,
-                BackgroundColor = Colors.Gray
+                FontSize =20,
+                WidthRequest = 50,
+                HeightRequest= 50,
+                TextColor = Colors.White,
+                FontAttributes = FontAttributes.Bold,
+               BackgroundColor = Color.FromArgb("#787c7f")
             };
     }
 }
