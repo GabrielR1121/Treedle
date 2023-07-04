@@ -2,7 +2,6 @@ namespace Treedle;
 /**
  * TO-DO: 
  *      * Figure out if there is a way to add a loading screen or soemthing between MainPage and playGame.
- *      * Resize Keyboard buttons and remove gray background
  *      * Start working on game logic.
  */
 public partial class playGame : ContentPage
