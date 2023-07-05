@@ -1,7 +1,6 @@
 namespace Treedle;
 /**
  * TO-DO: 
- *      * Optimize code for the new label system 
  *      * Add enter functionality
  *      * Add word functionality
  *      * Figure out if there is a way to add a loading screen or soemthing between MainPage and playGame.
@@ -91,7 +90,7 @@ public partial class playGame : ContentPage
         //Creates each grid by making using the createBorder and createLabel Message.
         for (int row = 0; row < 5; row++)
             for (int col = 0; col < 6; col++)
-                grid.Add(createBorder(createLabel("W" , Colors.Black)), row, col);
+                grid.Add(createBorder(createLabel("W",true), Colors.Black), row, col);
 
 
         return grid;
@@ -100,37 +99,55 @@ public partial class playGame : ContentPage
 
     /**
      * Creates a default label that holds a default element of X.
-     * X string is created to maintain box shape while user inputs letters of their own.
+     * W string is created to maintain box shape while user inputs letters of their own.
+     * Receives either a default letter for the label or the letter the user pressed on the keyboard and 
+     * a boolean to ask if the label should have a background color or not.
      * Returns a Label Object.
      */
-    public Label createLabel(String letter, Color color)
+    public Label createLabel(string letter, Boolean hasBackgroundColor)
     {
-        return new Label
+        if (hasBackgroundColor)
         {
-            Text = letter,
-            LineBreakMode = LineBreakMode.CharacterWrap,
-            TextColor = color,
-            BackgroundColor = Colors.Black,
-            FontSize = 39,
-            FontAttributes = FontAttributes.Bold,
-            // Padding = new Thickness(30, 15),
-            HorizontalTextAlignment = TextAlignment.Center,
-            VerticalTextAlignment = TextAlignment.Center
+            return new Label
+            {
+                Text = letter,
+                LineBreakMode = LineBreakMode.CharacterWrap,
+                TextColor = Colors.Black,
+                BackgroundColor = Colors.Black,
+                FontSize = 39,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center
 
 
-        };
+            };
+        }
+        else {
+
+             return new Label
+            {
+                Text = letter,
+                LineBreakMode = LineBreakMode.CharacterWrap,
+                TextColor = Colors.White,
+                FontSize = 39,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center
+            };
+
+        }
     }
     /**
      * Creates a border for each created label with the approriate cosmetics and size settings.
      * Receives a label Object. 
      * Returns a Border Object with a label inside.
      */
-    public Border createBorder(Label label)
+    public Border createBorder(Label label, Color color)
     {
         return new Border
         {
             Content = label,
-            BackgroundColor = Colors.Black,
+            BackgroundColor = color,
             Stroke = Color.FromArgb("#787c7f"),
             StrokeThickness = 2,
             Padding = new Thickness(30, 15),
@@ -221,12 +238,18 @@ public partial class playGame : ContentPage
 
         return Button;
     }
-
+    /**
+     * Action listener for when a key from the keyboard is pressed.
+     */
     private void Button_Clicked(object sender, EventArgs e)
     {
         updateGrid((sender as Button).Text);
     }
 
+    /**
+     * Updates the grid when a button is pressed. The action done depends on what key was pressed.
+     * Receives the letter the user clicked on in the keyboard.
+     */
     public void updateGrid(string letter)
     {
         if (currentColumn == 5)
@@ -237,27 +260,18 @@ public partial class playGame : ContentPage
 
        
         if(letter.CompareTo("Delete") != 0 && letter.CompareTo("Enter") != 0)
-            gameGrid.Add(new Label
-            {
-                Text = letter,
-                LineBreakMode = LineBreakMode.CharacterWrap,
-                TextColor = Colors.White,
-                FontSize = 39,
-                FontAttributes = FontAttributes.Bold,
-                // Padding = new Thickness(30, 15),
-                HorizontalTextAlignment = TextAlignment.Center,
-                VerticalTextAlignment = TextAlignment.Center
-            }, currentColumn++, currentRow);
+            gameGrid.Add(createLabel(letter,false), currentColumn++, currentRow);
+
 
         if (letter.CompareTo("Delete") == 0)
         {
             if (currentColumn != 0)
             {
-                gameGrid.Add(createBorder(createLabel("W",Colors.Black)), --currentColumn, currentRow);
+                gameGrid.Add(createBorder(createLabel("W", true), Colors.Black), --currentColumn, currentRow);
             }
             else
             {
-                gameGrid.Add(createBorder(createLabel("W", Colors.Black)), --currentColumn, currentRow);
+                gameGrid.Add(createBorder(createLabel("W", true), Colors.Black), currentColumn, currentRow);
             }
         }
     }
