@@ -1,7 +1,6 @@
 namespace Treedle;
 /**
  * TO-DO: 
- *      * Add enter functionality
  *      * Add word functionality
  *      * Figure out if there is a way to add a loading screen or soemthing between MainPage and playGame.
  */
@@ -10,6 +9,7 @@ public partial class playGame : ContentPage
     int currentRow = 0;
     int currentColumn = 0;
     Grid gameGrid = null;
+
     public playGame()
     {
         //Creates the title information at the top of the screen.
@@ -234,16 +234,47 @@ public partial class playGame : ContentPage
                 FontAttributes = FontAttributes.Bold,
                 BackgroundColor = Color.FromArgb("#787c7f")
             };
-        Button.Clicked += Button_Clicked;
+
+        if (Button.Text.CompareTo("Enter") == 0)
+            Button.Clicked += Enter_Clicked;
+        else if (Button.Text.CompareTo("Delete") == 0)
+            Button.Clicked += Delete_Clicked;
+        else
+            Button.Clicked += Letter_Clicked;
 
         return Button;
     }
     /**
-     * Action listener for when a key from the keyboard is pressed.
+     * Action listener for when a letter key from the keyboard is pressed.
      */
-    private void Button_Clicked(object sender, EventArgs e)
-    {
+    private void Letter_Clicked(object sender, EventArgs e) { 
+    
         updateGrid((sender as Button).Text);
+    }
+
+    /**
+    * Action listener for when the enter key is pressed.
+    */
+    private void Enter_Clicked(object sender,EventArgs e)
+    {
+        if (currentColumn == 5)
+        {
+            currentColumn = 0;
+            currentRow += 1;
+        }
+
+    }
+
+    /**
+    * Action listener for when the delete key is pressed.
+    */
+    private void Delete_Clicked(object sender,EventArgs e)
+    {
+        if (currentColumn != 0)
+            gameGrid.Add(createBorder(createLabel("W", true), Colors.Black), --currentColumn, currentRow);
+
+        else
+            gameGrid.Add(createBorder(createLabel("W", true), Colors.Black), currentColumn, currentRow);
     }
 
     /**
@@ -252,27 +283,10 @@ public partial class playGame : ContentPage
      */
     public void updateGrid(string letter)
     {
-        if (currentColumn == 5)
-        {
-            currentColumn = 0;
-            currentRow += 1;
-        }
-
-       
-        if(letter.CompareTo("Delete") != 0 && letter.CompareTo("Enter") != 0)
+        if(currentColumn < 5)
             gameGrid.Add(createLabel(letter,false), currentColumn++, currentRow);
 
 
-        if (letter.CompareTo("Delete") == 0)
-        {
-            if (currentColumn != 0)
-            {
-                gameGrid.Add(createBorder(createLabel("W", true), Colors.Black), --currentColumn, currentRow);
-            }
-            else
-            {
-                gameGrid.Add(createBorder(createLabel("W", true), Colors.Black), currentColumn, currentRow);
-            }
-        }
+               
     }
 }
