@@ -1,24 +1,30 @@
 namespace Treedle;
 /**
  * TO-DO: 
+ *      * Optimize code for the new label system 
+ *      * Add enter functionality
+ *      * Add word functionality
  *      * Figure out if there is a way to add a loading screen or soemthing between MainPage and playGame.
- *      * Start working on game logic.
  */
 public partial class playGame : ContentPage
 {
+    int currentRow = 0;
+    int currentColumn = 0;
+    Grid gameGrid = null;
     public playGame()
     {
         //Creates the title information at the top of the screen.
         createTitle();
 
         //Creates the verticle layout that holds the items in the page
-        VerticalStackLayout verticalStackLayout = new VerticalStackLayout { 
-        BackgroundColor=Colors.Black};
+        VerticalStackLayout verticalStackLayout = new VerticalStackLayout {
+            BackgroundColor = Colors.Black };
 
 
 
         //Adds the game grid to the vertical layout
-        verticalStackLayout.Add(createGameGrid());
+        gameGrid = createGameGrid();
+        verticalStackLayout.Add(gameGrid);
 
         //Adds all three rows of the keyboard to the vertical layout
         for (int keyboardRow = 0; keyboardRow < 3; keyboardRow++)
@@ -52,7 +58,7 @@ public partial class playGame : ContentPage
      */
     public Grid createGameGrid()
     {
-
+        var len = 1;
         //Creates the grid with the appropriate cosmetics and settings
         Grid grid = new Grid
         {
@@ -60,33 +66,33 @@ public partial class playGame : ContentPage
             ColumnSpacing = 10,
             RowSpacing = 10,
             HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
 
 
             RowDefinitions =
             {
-                new RowDefinition(),
-                new RowDefinition(),
-                new RowDefinition(),
-                new RowDefinition(),
-                new RowDefinition(),
-                new RowDefinition()
+                new RowDefinition( new GridLength(len, GridUnitType.Auto) ),
+                new RowDefinition(new GridLength(len,GridUnitType.Auto) ),
+                new RowDefinition(new GridLength(len,GridUnitType.Auto) ),
+                new RowDefinition(new GridLength(len, GridUnitType.Auto)),
+                new RowDefinition(new GridLength(len,GridUnitType.Auto) ),
+                new RowDefinition(new GridLength(len,GridUnitType.Auto) )
             },
             ColumnDefinitions =
             {
-                new ColumnDefinition(),
-                new ColumnDefinition(),
-                new ColumnDefinition(),
-                new ColumnDefinition(),
-                new ColumnDefinition()
+                new ColumnDefinition(new GridLength(len,GridUnitType.Auto) ),
+                new ColumnDefinition(new GridLength(len, GridUnitType.Auto)),
+                new ColumnDefinition(new GridLength(len,GridUnitType.Auto) ),
+                new ColumnDefinition(new GridLength(len,GridUnitType.Auto) ),
+                new ColumnDefinition(new GridLength(len,GridUnitType.Auto) )
             }
         };
 
         //Creates each grid by making using the createBorder and createLabel Message.
         for (int row = 0; row < 5; row++)
             for (int col = 0; col < 6; col++)
-            {
-               grid.Add(createBorder(createLabel()), row, col);
-            }
+                grid.Add(createBorder(createLabel("W" , Colors.Black)), row, col);
+
 
         return grid;
 
@@ -97,15 +103,19 @@ public partial class playGame : ContentPage
      * X string is created to maintain box shape while user inputs letters of their own.
      * Returns a Label Object.
      */
-    public Label createLabel()
+    public Label createLabel(String letter, Color color)
     {
         return new Label
         {
-            Text = "X",
-            TextColor = Colors.Black,
+            Text = letter,
+            LineBreakMode = LineBreakMode.CharacterWrap,
+            TextColor = color,
+            BackgroundColor = Colors.Black,
             FontSize = 39,
             FontAttributes = FontAttributes.Bold,
-            HorizontalTextAlignment = TextAlignment.Center
+            // Padding = new Thickness(30, 15),
+            HorizontalTextAlignment = TextAlignment.Center,
+            VerticalTextAlignment = TextAlignment.Center
 
 
         };
@@ -184,8 +194,10 @@ public partial class playGame : ContentPage
      */
     public Button createButton(string letter)
     {
+        var Button = new Button { };
+
         if (letter.CompareTo("Enter") == 0 || letter.CompareTo("Delete") == 0)
-            return new Button
+            Button = new Button
             {
                 Text = letter,
                 WidthRequest = 70,
@@ -195,15 +207,58 @@ public partial class playGame : ContentPage
                 BackgroundColor = Color.FromArgb("#787c7f")
             };
         else
-            return new Button
+            Button = new Button
             {
                 Text = letter,
-                FontSize =20,
+                FontSize = 20,
                 WidthRequest = 50,
-                HeightRequest= 50,
+                HeightRequest = 50,
                 TextColor = Colors.White,
                 FontAttributes = FontAttributes.Bold,
-               BackgroundColor = Color.FromArgb("#787c7f")
+                BackgroundColor = Color.FromArgb("#787c7f")
             };
+        Button.Clicked += Button_Clicked;
+
+        return Button;
+    }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        updateGrid((sender as Button).Text);
+    }
+
+    public void updateGrid(string letter)
+    {
+        if (currentColumn == 5)
+        {
+            currentColumn = 0;
+            currentRow += 1;
+        }
+
+       
+        if(letter.CompareTo("Delete") != 0 && letter.CompareTo("Enter") != 0)
+            gameGrid.Add(new Label
+            {
+                Text = letter,
+                LineBreakMode = LineBreakMode.CharacterWrap,
+                TextColor = Colors.White,
+                FontSize = 39,
+                FontAttributes = FontAttributes.Bold,
+                // Padding = new Thickness(30, 15),
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center
+            }, currentColumn++, currentRow);
+
+        if (letter.CompareTo("Delete") == 0)
+        {
+            if (currentColumn != 0)
+            {
+                gameGrid.Add(createBorder(createLabel("W",Colors.Black)), --currentColumn, currentRow);
+            }
+            else
+            {
+                gameGrid.Add(createBorder(createLabel("W", Colors.Black)), --currentColumn, currentRow);
+            }
+        }
     }
 }
