@@ -1,13 +1,18 @@
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using System.Collections.Generic;
+
 namespace Treedle;
 /**
  * TO-DO: 
- *      * Add word functionality
  *      * Figure out if there is a way to add a loading screen or soemthing between MainPage and playGame.
  */
 public partial class playGame : ContentPage
 {
     int currentRow = 0;
     int currentColumn = 0;
+    string MysteryWord = "APART";
+    string guessWord = null;
     Grid gameGrid = null;
 
     public playGame()
@@ -90,7 +95,7 @@ public partial class playGame : ContentPage
         //Creates each grid by making using the createBorder and createLabel Message.
         for (int row = 0; row < 5; row++)
             for (int col = 0; col < 6; col++)
-                grid.Add(createBorder(createLabel("W",true), Colors.Black), row, col);
+                grid.Add(createBorder(createLabel("W",true, Colors.Black), Colors.Black), row, col);
 
 
         return grid;
@@ -104,7 +109,7 @@ public partial class playGame : ContentPage
      * a boolean to ask if the label should have a background color or not.
      * Returns a Label Object.
      */
-    public Label createLabel(string letter, Boolean hasBackgroundColor)
+    public Label createLabel(string letter, Boolean hasBackgroundColor, Color color)
     {
         if (hasBackgroundColor)
         {
@@ -112,8 +117,8 @@ public partial class playGame : ContentPage
             {
                 Text = letter,
                 LineBreakMode = LineBreakMode.CharacterWrap,
-                TextColor = Colors.Black,
-                BackgroundColor = Colors.Black,
+                TextColor = color,
+                BackgroundColor = color,
                 FontSize = 39,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalTextAlignment = TextAlignment.Center,
@@ -248,8 +253,12 @@ public partial class playGame : ContentPage
      * Action listener for when a letter key from the keyboard is pressed.
      */
     private void Letter_Clicked(object sender, EventArgs e) { 
+
+        var clickedLetter = (sender as Button).Text;
     
-        updateGrid((sender as Button).Text);
+        updateGrid(clickedLetter);
+
+        guessWord += clickedLetter;
     }
 
     /**
@@ -259,6 +268,45 @@ public partial class playGame : ContentPage
     {
         if (currentColumn == 5)
         {
+            Dictionary<string, int> Guess = new Dictionary<string, int>();
+            Dictionary<string, int> Mystery = new Dictionary<string, int>();
+
+            for (int i = 0; i < guessWord.Length; i++)
+                    if (Guess.ContainsKey(guessWord[i].ToString()))
+                        Guess[guessWord[i].ToString()] += 1;
+                    
+                    else
+                        Guess.Add(guessWord[i].ToString(), 1);
+
+
+            for (int i = 0; i < MysteryWord.Length; i++)
+                if (Mystery.ContainsKey(MysteryWord[i].ToString()))
+                    Mystery[MysteryWord[i].ToString()] += 1;
+
+                else
+                    Mystery.Add(MysteryWord[i].ToString(), 1);
+
+
+            for (int i = 0; i < guessWord.Length; i++)
+                if (guessWord[i].CompareTo(MysteryWord[i]) == 0)
+                {
+                    Guess[guessWord[i].ToString()] -= 1;
+                    gameGrid.Add(createBorder(createLabel("W", true, Color.FromArgb("#6ca965")), Color.FromArgb("#6ca965")), i, currentRow);
+                    gameGrid.Add(createLabel(guessWord[i].ToString(), false, Colors.Black), i, currentRow);
+
+                }
+                else if (Mystery.ContainsKey(guessWord[i].ToString()) && Mystery[guessWord[i].ToString()] >= Guess[guessWord[i].ToString()])
+                {
+                    Guess[guessWord[i].ToString()] -= 1;
+                    gameGrid.Add(createBorder(createLabel("W", true, Color.FromArgb("#c8b653")), Color.FromArgb("#c8b653")), i, currentRow);
+                    gameGrid.Add(createLabel(guessWord[i].ToString(), false, Colors.Black), i, currentRow);
+                }
+                else
+                {
+                    gameGrid.Add(createBorder(createLabel("W", true, Color.FromArgb("#787c7f")), Color.FromArgb("#787c7f")), i, currentRow);
+                    gameGrid.Add(createLabel(guessWord[i].ToString(), false, Colors.Black), i, currentRow);
+                }
+            guessWord = null;
             currentColumn = 0;
             currentRow += 1;
         }
@@ -271,10 +319,12 @@ public partial class playGame : ContentPage
     private void Delete_Clicked(object sender,EventArgs e)
     {
         if (currentColumn != 0)
-            gameGrid.Add(createBorder(createLabel("W", true), Colors.Black), --currentColumn, currentRow);
+            gameGrid.Add(createBorder(createLabel("W", true, Colors.Black), Colors.Black), --currentColumn, currentRow);
 
         else
-            gameGrid.Add(createBorder(createLabel("W", true), Colors.Black), currentColumn, currentRow);
+            gameGrid.Add(createBorder(createLabel("W", true, Colors.Black), Colors.Black), currentColumn, currentRow);
+
+        guessWord = guessWord.Remove(guessWord.Length-1);
     }
 
     /**
@@ -284,7 +334,7 @@ public partial class playGame : ContentPage
     public void updateGrid(string letter)
     {
         if(currentColumn < 5)
-            gameGrid.Add(createLabel(letter,false), currentColumn++, currentRow);
+            gameGrid.Add(createLabel(letter,false, Colors.Black), currentColumn++, currentRow);
 
 
                
