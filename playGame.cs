@@ -1,12 +1,9 @@
-using System.Runtime.CompilerServices;
-using System.Text;
-
 namespace Treedle;
 /**
  * TO-DO:  
- *      * Make a list of words for the game to choose from at the start (Temporary).
  *      * Make a small window with the correct word if the player lost. 
- *      * Stop the game if the player one 
+ *      * Stop the game if the player won
+ *      * Replay Button
  *      * When player wins show pop up window with previous stats.
  *      * Optional: Add animations to grid
  *      * Optional: Optimize Label code to remove extra color arguments.
@@ -358,7 +355,11 @@ public partial class playGame : ContentPage
         else
             gameGrid.Add(createBorder(createLabel("W", true, Colors.Black), Colors.Black), currentColumn, currentRow);
 
-        guessWord = guessWord.Remove(guessWord.Length-1);
+        try
+        {
+            guessWord = guessWord.Remove(guessWord.Length - 1);
+        }catch(Exception) { };
+            
     }
 
     /**
