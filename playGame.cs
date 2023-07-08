@@ -1,8 +1,7 @@
 namespace Treedle;
 /**
- * TO-DO: 
- *      * Optimize Dictionary Code 
- *      * Color The keyboard buttons when enter button is clicked
+ * TO-DO:  
+ *      * Make a list of words for the game to choose from at the start (Temporary).
  *      * Make a small window with the correct word if the player lost. 
  *      * Stop the game if the player one 
  *      * When player wins show pop up window with previous stats.
@@ -261,7 +260,9 @@ public partial class playGame : ContentPage
     
         updateGrid(clickedLetter);
 
-        guessWord += clickedLetter;
+
+        if(guessWord == null || guessWord.Length < 5 )
+            guessWord += clickedLetter;
     }
 
     /**
@@ -363,8 +364,5 @@ public partial class playGame : ContentPage
     {
         if(currentColumn < 5)
             gameGrid.Add(createLabel(letter,false, Colors.Black), currentColumn++, currentRow);
-
-
-               
     }
 }
