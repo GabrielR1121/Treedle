@@ -1,3 +1,6 @@
+using System.Runtime.CompilerServices;
+using System.Text;
+
 namespace Treedle;
 /**
  * TO-DO:  
@@ -13,12 +16,14 @@ public partial class playGame : ContentPage
 {
     int currentRow = 0;
     int currentColumn = 0;
-    string MysteryWord = "APART";
+    string MysteryWord = null;
     string guessWord = null;
     Grid gameGrid = null;
 
     public playGame()
     {
+        getWord();
+
         //Creates the title information at the top of the screen.
         createTitle();
 
@@ -364,5 +369,31 @@ public partial class playGame : ContentPage
     {
         if(currentColumn < 5)
             gameGrid.Add(createLabel(letter,false, Colors.Black), currentColumn++, currentRow);
+    }
+    /**
+     * !!!!!!!!!!!!!!!!THIS METHOD IS TEMPORARY WHILE API IS MADE!!!!!!!!!!!!!!!!!!!!!!!
+     * Reads from the word list file and picks a random word to use as the mystery file.
+     * 
+     */
+    public async void getWord()
+    {
+        //Creates a line variable to stroe each line in Word list
+        string line;
+
+        //Creates the words list where all the words will be stored.
+        List<string> words = new List<string>();
+
+        //Opens the WordList.txt file
+        using Stream file = await FileSystem.Current.OpenAppPackageFileAsync("WordList.txt");
+
+        //Creates a reader for file WorldList.txt
+        using StreamReader reader = new StreamReader(file);
+
+        //Traverses WordList.txt and adds each word to the words list.
+        while((line = reader.ReadLine()) != null)
+            words.Add(line);
+            
+       //Picks a random word inside words to use as Mystery Word.
+        MysteryWord = words[new Random().Next(words.Count)].ToUpper();
     }
 }
