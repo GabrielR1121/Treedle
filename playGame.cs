@@ -1,10 +1,13 @@
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using System.Collections.Generic;
-
 namespace Treedle;
 /**
  * TO-DO: 
+ *      * Optimize Dictionary Code 
+ *      * Color The keyboard buttons when enter button is clicked
+ *      * Make a small window with the correct word if the player lost. 
+ *      * Stop the game if the player one 
+ *      * When player wins show pop up window with previous stats.
+ *      * Optional: Add animations to grid
+ *      * Optional: Optimize Label code to remove extra color arguments.
  *      * Figure out if there is a way to add a loading screen or soemthing between MainPage and playGame.
  */
 public partial class playGame : ContentPage
@@ -268,46 +271,71 @@ public partial class playGame : ContentPage
     {
         if (currentColumn == 5)
         {
+            //This cold could possibly be its own method in time
+            
+            //Creates 2 dictionaries to log the amount of letters the guess word and mystery word have.
             Dictionary<string, int> Guess = new Dictionary<string, int>();
             Dictionary<string, int> Mystery = new Dictionary<string, int>();
 
+            //Fills both dictionaries with a key of a letter from each word and the value of 1. 
+            //If the key already exists the value is increased by 1
             for (int i = 0; i < guessWord.Length; i++)
-                    if (Guess.ContainsKey(guessWord[i].ToString()))
-                        Guess[guessWord[i].ToString()] += 1;
-                    
-                    else
-                        Guess.Add(guessWord[i].ToString(), 1);
+            {
+                if (Guess.ContainsKey(guessWord[i].ToString()))
+                    Guess[guessWord[i].ToString()] += 1;
 
+                else
+                    Guess.Add(guessWord[i].ToString(), 1);
 
-            for (int i = 0; i < MysteryWord.Length; i++)
                 if (Mystery.ContainsKey(MysteryWord[i].ToString()))
                     Mystery[MysteryWord[i].ToString()] += 1;
 
                 else
                     Mystery.Add(MysteryWord[i].ToString(), 1);
+            }
 
 
+                
+
+            //Loops through the words and their dictionaries to color the Grid either Green, Yellow Or Gray
             for (int i = 0; i < guessWord.Length; i++)
+                //If the letter is in the same position in both guessWord and Mystery Word Color the Grid GREEN.
                 if (guessWord[i].CompareTo(MysteryWord[i]) == 0)
                 {
+                    //Removes a value of one from the guess dictionary to indicate that the letter was already used.
                     Guess[guessWord[i].ToString()] -= 1;
                     gameGrid.Add(createBorder(createLabel("W", true, Color.FromArgb("#6ca965")), Color.FromArgb("#6ca965")), i, currentRow);
                     gameGrid.Add(createLabel(guessWord[i].ToString(), false, Colors.Black), i, currentRow);
 
                 }
+                    //If the letter exists in the word but is in the wrong position AND
+                    // the value of that letter in Mystery is Greater or equal to the value in Guess then
+                    // Color the Grid to YELLOW.
+
+                    //The dictionary Values are impotant here because it helps deal with repeated letters.
+                    // The reason why the Mystery Dictionary has to be greater or equal is because 
+                    // if the dictionary value has MORE letters or the SAME amount in means those letters will be YELLOW
+                    // because they repeate in guessWord. If not they Dont reapeat and the letter is colored GRAY.
                 else if (Mystery.ContainsKey(guessWord[i].ToString()) && Mystery[guessWord[i].ToString()] >= Guess[guessWord[i].ToString()])
                 {
                     Guess[guessWord[i].ToString()] -= 1;
                     gameGrid.Add(createBorder(createLabel("W", true, Color.FromArgb("#c8b653")), Color.FromArgb("#c8b653")), i, currentRow);
                     gameGrid.Add(createLabel(guessWord[i].ToString(), false, Colors.Black), i, currentRow);
                 }
+                //If the letter does not exist in the word OR the letter does not repeat in the word then color 
+                // the grid Gray.
                 else
                 {
                     gameGrid.Add(createBorder(createLabel("W", true, Color.FromArgb("#787c7f")), Color.FromArgb("#787c7f")), i, currentRow);
                     gameGrid.Add(createLabel(guessWord[i].ToString(), false, Colors.Black), i, currentRow);
                 }
+            //Clears the value in guessWord
             guessWord = null;
+
+            //Changes Column
             currentColumn = 0;
+
+            //Chamges Row
             currentRow += 1;
         }
 
