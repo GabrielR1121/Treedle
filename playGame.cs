@@ -1,46 +1,33 @@
+using CommunityToolkit.Maui.Views;
+
 namespace Treedle;
 /**
  * TO-DO:  
  *      * Make a small window with the correct word if the player lost. 
- *      * Stop the game if the player won
- *      * Replay Button
- *      * When player wins show pop up window with previous stats.
  *      * Optional: Add animations to grid
  *      * Optional: Optimize Label code to remove extra color arguments.
  *      * Figure out if there is a way to add a loading screen or soemthing between MainPage and playGame.
  */
 public partial class playGame : ContentPage
 {
-    int currentRow = 0;
-    int currentColumn = 0;
-    string MysteryWord = null;
-    string guessWord = null;
-    Grid gameGrid = null;
+    static int currentRow = 0;
+    static int currentColumn = 0;
+    static string MysteryWord = null;
+    static string guessWord = null;
+    static bool gameWon = false;
+    static Grid gameGrid = null;
+    static playGame board;
 
     public playGame()
     {
-        getWord();
+        //Stores this instance in a variable to be accessed within static methods
+        board = this;
 
-        //Creates the title information at the top of the screen.
+        //Creates de title in the navigation
         createTitle();
 
-        //Creates the verticle layout that holds the items in the page
-        VerticalStackLayout verticalStackLayout = new VerticalStackLayout {
-            BackgroundColor = Colors.Black };
-
-
-
-        //Adds the game grid to the vertical layout
-        gameGrid = createGameGrid();
-        verticalStackLayout.Add(gameGrid);
-
-        //Adds all three rows of the keyboard to the vertical layout
-        for (int keyboardRow = 0; keyboardRow < 3; keyboardRow++)
-            verticalStackLayout.Add(createKeyboardGrid(keyboardRow));
-
-        //Adds the vertical layout contents to the Content Page
-        Content = verticalStackLayout;
-
+        //Initiates the game with everything in 0 or null
+        startGame();
 
     }
     /**
@@ -64,7 +51,7 @@ public partial class playGame : ContentPage
      * Creates the grid system in treedle. 
      * Creates all 6 rows and 5 Columns 
      */
-    public Grid createGameGrid()
+    public static Grid createGameGrid()
     {
         var len = 1;
         //Creates the grid with the appropriate cosmetics and settings
@@ -113,7 +100,7 @@ public partial class playGame : ContentPage
      * a boolean to ask if the label should have a background color or not.
      * Returns a Label Object.
      */
-    public Label createLabel(string letter, Boolean hasBackgroundColor, Color color)
+    public static Label createLabel(string letter, Boolean hasBackgroundColor, Color color)
     {
         if (hasBackgroundColor)
         {
@@ -151,7 +138,7 @@ public partial class playGame : ContentPage
      * Receives a label Object. 
      * Returns a Border Object with a label inside.
      */
-    public Border createBorder(Label label, Color color)
+    public static Border createBorder(Label label, Color color)
     {
         return new Border
         {
@@ -169,7 +156,7 @@ public partial class playGame : ContentPage
      * Receives the row number of the keyboard. 
      * Returns the grid of buttons for the assigned row
      */
-    public Grid createKeyboardGrid(int rowNumber)
+    public static Grid createKeyboardGrid(int rowNumber)
     {
         //Keyboard design 
         Grid grid = new Grid
@@ -218,7 +205,7 @@ public partial class playGame : ContentPage
      * Receives the keyboard letter
      * Returns the button with the designated cosmetics and settings
      */
-    public Button createButton(string letter)
+    public static Button createButton(string letter)
     {
         var Button = new Button { };
 
@@ -256,7 +243,7 @@ public partial class playGame : ContentPage
     /**
      * Action listener for when a letter key from the keyboard is pressed.
      */
-    private void Letter_Clicked(object sender, EventArgs e) { 
+    private static void Letter_Clicked(object sender, EventArgs e) { 
 
         var clickedLetter = (sender as Button).Text;
     
@@ -270,7 +257,7 @@ public partial class playGame : ContentPage
     /**
     * Action listener for when the enter key is pressed.
     */
-    private void Enter_Clicked(object sender,EventArgs e)
+    private static void Enter_Clicked(object sender,EventArgs e)
     {
         if (currentColumn == 5)
         {
@@ -298,17 +285,21 @@ public partial class playGame : ContentPage
             }
 
 
-                
+
+            int check = 0;
 
             //Loops through the words and their dictionaries to color the Grid either Green, Yellow Or Gray
             for (int i = 0; i < guessWord.Length; i++)
                 //If the letter is in the same position in both guessWord and Mystery Word Color the Grid GREEN.
                 if (guessWord[i].CompareTo(MysteryWord[i]) == 0)
                 {
+                    check++;
                     //Removes a value of one from the guess dictionary to indicate that the letter was already used.
                     Guess[guessWord[i].ToString()] -= 1;
                     gameGrid.Add(createBorder(createLabel("W", true, Color.FromArgb("#6ca965")), Color.FromArgb("#6ca965")), i, currentRow);
                     gameGrid.Add(createLabel(guessWord[i].ToString(), false, Colors.Black), i, currentRow);
+                    if (check == 5)
+                        gameWon = true;
 
                 }
                     //If the letter exists in the word but is in the wrong position AND
@@ -332,6 +323,11 @@ public partial class playGame : ContentPage
                     gameGrid.Add(createBorder(createLabel("W", true, Color.FromArgb("#787c7f")), Color.FromArgb("#787c7f")), i, currentRow);
                     gameGrid.Add(createLabel(guessWord[i].ToString(), false, Colors.Black), i, currentRow);
                 }
+
+            
+
+
+
             //Clears the value in guessWord
             guessWord = null;
 
@@ -340,6 +336,8 @@ public partial class playGame : ContentPage
 
             //Chamges Row
             currentRow += 1;
+
+            checkVictory();
         }
 
     }
@@ -347,7 +345,7 @@ public partial class playGame : ContentPage
     /**
     * Action listener for when the delete key is pressed.
     */
-    private void Delete_Clicked(object sender,EventArgs e)
+    private static void Delete_Clicked(object sender,EventArgs e)
     {
         if (currentColumn != 0)
             gameGrid.Add(createBorder(createLabel("W", true, Colors.Black), Colors.Black), --currentColumn, currentRow);
@@ -366,7 +364,7 @@ public partial class playGame : ContentPage
      * Updates the grid when a button is pressed. The action done depends on what key was pressed.
      * Receives the letter the user clicked on in the keyboard.
      */
-    public void updateGrid(string letter)
+    public static void updateGrid(string letter)
     {
         if(currentColumn < 5)
             gameGrid.Add(createLabel(letter,false, Colors.Black), currentColumn++, currentRow);
@@ -376,7 +374,7 @@ public partial class playGame : ContentPage
      * Reads from the word list file and picks a random word to use as the mystery file.
      * 
      */
-    public async void getWord()
+    public static async void getWord()
     {
         //Creates a line variable to stroe each line in Word list
         string line;
@@ -396,5 +394,56 @@ public partial class playGame : ContentPage
             
        //Picks a random word inside words to use as Mystery Word.
         MysteryWord = words[new Random().Next(words.Count)].ToUpper();
+    }
+
+    /**
+     * Checks if the player won or lost the game and displays the Statistics Popup
+     */
+    public static void checkVictory()
+    {
+        if (gameWon || currentRow > 5)
+        {
+            //Displays the statistics popup and if the player decides to play again will restart the board
+            board.ShowPopup(new PlayerStats(MysteryWord));
+        }
+
+    }
+
+    /**
+     * Initiates all of the boards starting components or resets the board when need.
+     */
+    public static void startGame()
+    {
+        currentRow = 0;
+        currentColumn = 0;
+        MysteryWord = null;
+        guessWord = null;
+        gameWon = false;
+        gameGrid = null;
+
+        //Retrives the word to be used as a Mystery Word
+        getWord();
+
+        //Creates the title information at the top of the screen.
+
+        //Creates the verticle layout that holds the items in the page
+        VerticalStackLayout verticalStackLayout = new VerticalStackLayout
+        {
+            BackgroundColor = Colors.Black
+        };
+
+
+
+        //Adds the game grid to the vertical layout
+        gameGrid = createGameGrid();
+        verticalStackLayout.Add(gameGrid);
+
+        //Adds all three rows of the keyboard to the vertical layout
+        for (int keyboardRow = 0; keyboardRow < 3; keyboardRow++)
+            verticalStackLayout.Add(createKeyboardGrid(keyboardRow));
+
+        //Adds the vertical layout contents to the Content Page
+        board.Content = verticalStackLayout;
+
     }
 }
