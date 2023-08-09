@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             xmlns:viewmodel="clr-namespace:Treedle.ViewModel"
+             xmlns:model="clr-namespace:Treedle.Model"
+             x:Class="Treedle.View.PlayerStatsPage"
+             x:DataType="viewmodel:GameViewModel"
+             BackgroundColor="#80000000"
+             CloseWhenBackgroundIsClicked="False">
+
+    <Border
+        WidthRequest="380"
+        HeightRequest="300"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        BackgroundColor="Black">
+
+
+        <VerticalStackLayout
+            BackgroundColor="Black"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+         <Grid RowDefinitions="*,Auto,Auto"
+          Padding="8,12,8,12"
+          HorizontalOptions="Center"
+          VerticalOptions="Center"
+          RowSpacing="50">
+
+                <HorizontalStackLayout
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                    <Label 
+                  Text="The word was: "
+                  TextColor="White"
+                  VerticalOptions="Center" 
+                  FontSize="30"
+                  FontAttributes="Bold"
+                  HorizontalOptions="Center"
+                />
+                    <Border
+                    Stroke="gray"
+                    StrokeThickness="3"
+                    WidthRequest="120"
+                    HeightRequest="70">
+
+                        <Label
+                           x:Name="correctword"
+                           TextColor="Black"
+                           VerticalOptions="Center" 
+                           FontSize="30"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+
+                    </Border>
+                </HorizontalStackLayout>
+            <Button
+            Grid.Row="1"
+            Text="Play Again"
+            BackgroundColor="DarkGreen"
+            FontAttributes="Bold"
+            FontSize="20"
+            CornerRadius="10"
+            Clicked="Button_Clicked"/>
+
+          <Button
+            Grid.Row="2"
+            Text="Back to Main Menu"
+            BackgroundColor="DarkRed"
+            FontAttributes="Bold"
+            FontSize="15"
+            CornerRadius="10"
+            Clicked="Button_Clicked_1"/>
+
+            </Grid>
+        </VerticalStackLayout>
+    </Border>
+</mopups:PopupPage>

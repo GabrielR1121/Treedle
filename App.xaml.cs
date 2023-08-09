@@ -1,4 +1,6 @@
-﻿namespace Treedle;
+﻿using Treedle.View;
+
+namespace Treedle;
 
 public partial class App : Application
 {

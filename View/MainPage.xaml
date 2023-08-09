@@ -36,31 +36,13 @@
                 Text="Play"
                 SemanticProperties.Hint="Starts the game"
                 FontAttributes="Bold"
-                FontSize="25"
+                FontSize="30"
                 CornerRadius="20"
+                BackgroundColor="DarkGreen"
                 Clicked="btn_play_Clicked"
-                HorizontalOptions="Center"/>
-            
-            <Button
-                Text="Log in"
-                SemanticProperties.Hint= "Allows player to log in"
-                FontAttributes="Bold"
-                FontSize="25"
-                CornerRadius="20"
-                Margin="-10"
-                Clicked="login_Clicked"
-                HorizontalOptions="Center" />
-
-            <Button
-                Text="How to play"
-                SemanticProperties.Hint= "Explains how to play the game"
-                FontAttributes="Bold"
-                FontSize="20"
-                CornerRadius="20"
-                Clicked="how_Clicked"
-                HorizontalOptions="Center" />
-
-
+                HorizontalOptions="Center"
+                Padding="100,5,100,5"/>
+     
             <Label
                 Text="This is a recreation of the game Wordle for educational purposes only."
                 SemanticProperties.HeadingLevel="Level3"
