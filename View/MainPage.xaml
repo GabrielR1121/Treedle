@@ -1,28 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Creates a view for Main Page
+  
+    The back button is removed
+    The navigation bar is removed
+    
+    Things misssing: 
+       Main Page View Model to sepearte commands for the view page-->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Treedle.MainPage"
              NavigationPage.HasNavigationBar ="False">
 
     <ScrollView>
+        <!--Creates a vertical layout in order to store all of the pages contents-->
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
+            
+            <!--Tree image icon-->
             <!-- www.flaticon.com/free-icons/tree, Tree icons, created by ultimatearm - Flaticon -->
             <Image
                 Source="tree_icon.png"
                 SemanticProperties.Description="Cute tree"
                 HeightRequest="250"
                 HorizontalOptions="Center" />
-
+            <!--Title of the app-->
             <Label
                 Text="Treedle"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="50"
                 FontAttributes="Bold"
                 HorizontalOptions="Center" />
-
+            <!-- Instrictions on how to play the game -->
             <Label
                 Text="Get 6 chances to guess a 5-letter word."
                 SemanticProperties.HeadingLevel="Level2"
@@ -31,7 +41,7 @@
                 Padding="-1"
                 HorizontalOptions="Center" />
             
-            
+            <!-- Play Button to start the game -->
             <Button
                 Text="Play"
                 SemanticProperties.Hint="Starts the game"
@@ -42,7 +52,7 @@
                 Clicked="btn_play_Clicked"
                 HorizontalOptions="Center"
                 Padding="100,5,100,5"/>
-     
+            <!-- Disclaimer  -->
             <Label
                 Text="This is a recreation of the game Wordle for educational purposes only."
                 SemanticProperties.HeadingLevel="Level3"
@@ -50,7 +60,7 @@
                 FontSize="15"
                 Padding="-1"
                 HorizontalOptions="Center" />
-
+            <!-- Created By -->
             <Label
                 Text="recreated by Gabriel Rodriguez"
                 SemanticProperties.HeadingLevel="Level4"

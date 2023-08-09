@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!-- Creates a pop up to tell the user the word is not in the list 
+    window instance with the background transparent and allowed to closes when background is clicked-->
 <mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
@@ -9,13 +11,15 @@
              BackgroundColor="#80000000"
              CloseWhenBackgroundIsClicked="True">
     
-    
+    <!-- Creates Verticla layout to hold all the components -->
     <VerticalStackLayout
         HorizontalOptions="Center">
 
+        <!-- Creates a background for the message -->
         <Frame
             BackgroundColor="White"
             CornerRadius="10">
+        <!-- Creates message to display -->
         <Label 
             Text="NOT A WORD"
             FontAttributes="Bold"
