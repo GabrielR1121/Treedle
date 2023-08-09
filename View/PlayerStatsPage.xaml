@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!-- Creates instance if Pop Up to tell the player the word and ask if they wanna play again or go back to main menu
+     Has a background color of transparent 
+     Can not be closed by clicking the background-->
 <mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
@@ -9,6 +12,7 @@
              BackgroundColor="#80000000"
              CloseWhenBackgroundIsClicked="False">
 
+    <!-- Creates a border to force the pop up window to rezize to the desired size -->
     <Border
         WidthRequest="380"
         HeightRequest="300"
@@ -16,18 +20,20 @@
         VerticalOptions="Center"
         BackgroundColor="Black">
 
-
+        <!-- Creates a vertical stack that holds all the components of the pop up  -->
         <VerticalStackLayout
             BackgroundColor="Black"
             HorizontalOptions="Center"
             VerticalOptions="Center">
 
+          <!-- Creates a Grid to hold all three componenets within the stack layout -->
          <Grid RowDefinitions="*,Auto,Auto"
           Padding="8,12,8,12"
           HorizontalOptions="Center"
           VerticalOptions="Center"
           RowSpacing="50">
 
+             <!-- Holds the components of the correct word -->
                 <HorizontalStackLayout
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
@@ -56,6 +62,8 @@
 
                     </Border>
                 </HorizontalStackLayout>
+             
+             <!-- Creates the Play again button -->
             <Button
             Grid.Row="1"
             Text="Play Again"
@@ -65,6 +73,7 @@
             CornerRadius="10"
             Clicked="Button_Clicked"/>
 
+          <!-- Creates the return the main menu button -->
           <Button
             Grid.Row="2"
             Text="Back to Main Menu"

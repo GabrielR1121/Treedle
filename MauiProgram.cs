@@ -7,7 +7,10 @@ using Treedle.View;
 using Treedle.ViewModel;
 
 namespace Treedle;
-
+/**
+ * Program receated by Gabriel E. Rodriguez Garcia
+ * Data Finished: August 9, 2023
+ */
 public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
@@ -16,7 +19,7 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
-            .ConfigureSyncfusionCore()
+            
 			.ConfigureMopups()
             .ConfigureFonts(fonts =>
 			{

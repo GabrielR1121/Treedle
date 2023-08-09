@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--Creates a view for Game Page that is linked to Game View Page
+    
+    The whole page has a background color of black
+    The back button is removed
+    The navigation bar is removed-->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Treedle.View.GamePage"
@@ -9,20 +14,30 @@
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
              >
-
+    <!--Creates a Grid to hold All the rows in the game and the Keyboard-->
     <Grid RowDefinitions="*,Auto"
           Padding="8,12,8,12">
+        <!--Creates a vertical layout to store all the rows in the game
+        
+            The Vertical layout is binded to the Rows array -->
         <VerticalStackLayout
             Spacing="8"
             BindableLayout.ItemsSource="{Binding Rows}">
+            <!--Creates a template for the data within Rows array-->
             <BindableLayout.ItemTemplate>
+                <!--The Data template will be linked to the model WordRows-->
                 <DataTemplate x:DataType="model:WordRows">
+                    <!--Creates a horizontal layout that holds each individual row in Rows
+                        
+                        The Horizontal layout is binded to the Letters array in WordRows model-->
                     <HorizontalStackLayout
                         Spacing="8"
                         HorizontalOptions="Center"
                         BindableLayout.ItemsSource="{Binding Letters}">
                         <BindableLayout.ItemTemplate>
+                            <!--The Data Template will be linked to the Letters Model-->
                             <DataTemplate x:DataType="model:Letter">
+                                <!--Creates a frame with a label for each letter within Letters-->
                                 <Frame 
                                        Style="{DynamicResource LetterFrame}"
                                        BackgroundColor="{Binding Color}"
@@ -35,8 +50,6 @@
                                            VerticalOptions="Center"
                                            TextColor="White"/>
                                 </Frame>
-
-
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </HorizontalStackLayout>
@@ -44,10 +57,13 @@
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
 
+        <!--Creates a vertical layout in order to hold each row of the keyboard at the bottom of the Rows-->
         <VerticalStackLayout Grid.Row="1">
+            <!--Creates a horizontal layout that holds the first row in the keyboard-->
             <HorizontalStackLayout
                         HorizontalOptions="Center"
                         BindableLayout.ItemsSource="{Binding keyboardRow1}">
+                <!--Creates a template for each key within the keyboard-->
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="model:Keys">
                         <Button Style="{DynamicResource LetterButton}"
@@ -62,11 +78,12 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </HorizontalStackLayout>
-
+            <!--Creates a horizontal layout that holds the second row in the keyboard-->
             <HorizontalStackLayout
                         HorizontalOptions="Center"
                         BindableLayout.ItemsSource="{Binding keyboardRow2}">
                 <BindableLayout.ItemTemplate>
+                    <!--Creates a template for each key within the keyboard-->
                     <DataTemplate x:DataType="model:Keys">
                         <Button Style="{DynamicResource LetterButton}"
                                 BackgroundColor="{Binding Color}"
@@ -81,10 +98,12 @@
                 </BindableLayout.ItemTemplate>
             </HorizontalStackLayout>
 
+            <!--Creates a horizontal layout that holds the third row in the keyboard-->
             <HorizontalStackLayout
                         HorizontalOptions="Center"
                         BindableLayout.ItemsSource="{Binding keyboardRow3}">
                 <BindableLayout.ItemTemplate>
+                    <!--Creates a template for each key within the keyboard-->
                     <DataTemplate x:DataType="model:Keys">
                         <Button Style="{DynamicResource LetterButton}"
                                 Text="{Binding Key}"
