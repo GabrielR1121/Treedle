@@ -2,6 +2,12 @@
 
 Treedle is a fun and challenging word puzzle game inspired by the popular game "Wordle." This Wordle clone is written using MAUI .NET, a powerful and modern framework for building cross-platform applications. With Treedle, players can test their word-solving skills and enjoy hours of entertainment.
 
+Resources that helped me to build this game are: 
+ - [https://www.youtube.com/watch?v=DuNLR_NJv8U&t=7781s&ab_channel=JamesMontemagno](https://youtu.be/DuNLR_NJv8U)
+ - https://youtu.be/rumfIg9qJ_Y
+ - https://wordleunlimited.org/
+ - https://www.nytimes.com/games/wordle/index.html
+
 ## 🎮 How to Play
 1. **Objective:** The goal of Treedle is to guess a five-letter word in as few attempts as possible.
 
@@ -14,25 +20,6 @@ Treedle is a fun and challenging word puzzle game inspired by the popular game "
 
 1. **Winning:** If you guess the correct word within six attempts, you win the round! If you don't succeed, you can try again or start a new game.
 
-## 🚀 Installation
-Follow these steps to get Treedle up and running on your system:
-
-1. **Prerequisites:** Make sure you have the following installed on your machine:
-
-   - .NET SDK (v6.0 or later)
-   - .NET MAUI (v6.0 or later)
-1. **Clone the Repository:** Clone this repository to your local machine using the following command:
-
-```
-git clone https://github.com/your-username/Treedle.git
-```
-
-1. **Build and Run:** Navigate to the project directory and build the solution. Then, run the application using the following commands:
-```
-cd Treedle
-dotnet build
-dotnet run
-```
 1. **Enjoy:** Once the application is running, you can start playing Treedle and enjoy the word-guessing challenge!
 
 ## 🤝 Contributing
